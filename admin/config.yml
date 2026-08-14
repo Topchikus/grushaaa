@@ -1,0 +1,30 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: simple
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "news"
+    label: "Новости"
+    files:
+      - file: "content/news.json"
+        label: "Лента новостей партии «Груша»"
+        name: "news"
+        fields:
+          - label: "Новости"
+            name: "items"
+            widget: "list"
+            summary: "{{title}} — {{date}}"
+            fields:
+              - { label: "Заголовок", name: "title", widget: "string" }
+              - { label: "Дата (как будет показана на сайте)", name: "date", widget: "string", hint: "Например: 20 августа 2026" }
+              - { label: "Эмодзи", name: "emoji", widget: "string", default: "🍐" }
+              - { label: "Показывать как главную новость (баннер сверху)", name: "lead", widget: "boolean", default: false }
+              - { label: "Краткое описание (видно сразу)", name: "teaser", widget: "text" }
+              - label: "Подробности (раскрываются по клику)"
+                name: "details"
+                widget: "text"
+                hint: "Каждый абзац — с новой строки, через пустую строку. Строка, начинающаяся с «> », станет цитатой."

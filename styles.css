@@ -16,7 +16,10 @@ body{
   font-family:'Inter',sans-serif;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  opacity:0;
+  transition:opacity .4s ease;
 }
+body.loaded{opacity:1;}
 h1,h2,h3,.display{
   font-family:'Unbounded',sans-serif;
   margin:0;
@@ -89,7 +92,23 @@ header{
 }
 @keyframes scrollx{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-.hero{padding:64px 0 50px;text-align:center;}
+.hero{padding:64px 0 50px;text-align:center;position:relative;}
+.hero-blob{
+  position:absolute;top:-60px;left:50%;
+  width:420px;height:420px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle, rgba(156,175,62,0.28) 0%, rgba(156,175,62,0) 70%);
+  border-radius:50%;
+  filter:blur(10px);
+  animation:blobfloat 8s ease-in-out infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes blobfloat{
+  0%,100%{transform:translateX(-50%) translateY(0) scale(1);}
+  50%{transform:translateX(-46%) translateY(18px) scale(1.08);}
+}
+.hero .wrap{position:relative;z-index:1;}
 .pear-mark{width:110px;margin:0 auto 24px;}
 .pear-body{
   fill:var(--pear);stroke:var(--ink);stroke-width:2.5;
@@ -118,6 +137,21 @@ header{
   max-width:54ch;margin:20px auto 30px;
 }
 .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+.stats{padding:10px 0 60px;}
+.stats .wrap{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  text-align:center;
+}
+.stat-num{
+  font-family:'Unbounded',sans-serif;font-weight:900;
+  font-size:clamp(2rem,4.5vw,2.8rem);color:var(--pear-deep);
+  line-height:1;
+}
+.stat-lbl{
+  font-size:0.82rem;color:rgba(28,26,18,0.6);margin-top:8px;
+  line-height:1.4;
+}
 
 .featured{padding:0 0 80px;}
 .featured-card{
@@ -166,11 +200,42 @@ header{
 .head h2{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.15;}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease;}
 .reveal.in{opacity:1;transform:translateY(0);}
+.grid3.in .card,
+.news-grid.in .news-card,
+.team-grid.in .person,
+.deputy-grid.in .deputy-card{
+  animation:stagger-in .55s ease backwards;
+}
+.grid3.in .card:nth-child(1),.news-grid.in .news-card:nth-child(1),.team-grid.in .person:nth-child(1),.deputy-grid.in .deputy-card:nth-child(1){animation-delay:.02s;}
+.grid3.in .card:nth-child(2),.news-grid.in .news-card:nth-child(2),.team-grid.in .person:nth-child(2),.deputy-grid.in .deputy-card:nth-child(2){animation-delay:.08s;}
+.grid3.in .card:nth-child(3),.news-grid.in .news-card:nth-child(3),.team-grid.in .person:nth-child(3),.deputy-grid.in .deputy-card:nth-child(3){animation-delay:.14s;}
+.grid3.in .card:nth-child(4),.news-grid.in .news-card:nth-child(4),.team-grid.in .person:nth-child(4),.deputy-grid.in .deputy-card:nth-child(4){animation-delay:.20s;}
+.grid3.in .card:nth-child(5),.news-grid.in .news-card:nth-child(5),.team-grid.in .person:nth-child(5),.deputy-grid.in .deputy-card:nth-child(5){animation-delay:.26s;}
+.grid3.in .card:nth-child(6),.news-grid.in .news-card:nth-child(6),.team-grid.in .person:nth-child(6),.deputy-grid.in .deputy-card:nth-child(6){animation-delay:.32s;}
+.grid3.in .card:nth-child(n+7),.news-grid.in .news-card:nth-child(n+7),.deputy-grid.in .deputy-card:nth-child(n+7){animation-delay:.38s;}
+@keyframes stagger-in{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
 
 .about-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;
+  margin-bottom:40px;
 }
 .about-grid p{font-size:1rem;line-height:1.7;color:rgba(28,26,18,0.75);margin:0 0 16px;}
+.about-close{
+  border-top:1px solid var(--line);
+  padding-top:28px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.about-close .badge{
+  font-size:2rem;flex-shrink:0;
+}
+.about-close p{
+  margin:0;font-size:1.05rem;line-height:1.55;
+  font-family:'Unbounded',sans-serif;font-weight:600;
+  color:var(--ink);max-width:60ch;
+}
 .timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--pear-deep);}
 .timeline li{padding:0 0 24px 24px;position:relative;}
 .timeline li::before{
@@ -316,6 +381,7 @@ footer p{font-size:0.78rem;color:rgba(28,26,18,0.5);margin:0;line-height:1.6;}
   .navlinks{display:none;}
   .navtoggle{display:block;}
   .about-grid{grid-template-columns:1fr;}
+  .stats .wrap{grid-template-columns:repeat(2,1fr);gap:32px 20px;}
   .grid3{grid-template-columns:1fr;}
   .news-grid{grid-template-columns:1fr;}
   .news-card.lead{grid-column:span 1;grid-template-columns:1fr;text-align:center;}

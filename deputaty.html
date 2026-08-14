@@ -183,20 +183,7 @@
   <p>Партия «Груша» — сатирический демо-проект. Депутаты Грушедумы, их имена и цитаты вымышлены и созданы для примера наполнения сайта.</p>
 </footer>
 
-<script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
-  els.forEach(el=>io.observe(el));
-
-  const toggle = document.querySelector('.navtoggle');
-  const links = document.querySelector('.navlinks');
-  toggle.addEventListener('click', ()=>{
-    const open = links.style.display === 'flex';
-    links.style.cssText = open ? '' : 'display:flex; position:fixed; top:64px; left:0; right:0; background:var(--paper); flex-direction:column; padding:18px 28px; gap:16px; border-bottom:1px solid var(--line); z-index:99;';
-  });
-</script>
+<script src="js/site.js" defer></script>
 
 </body>
 </html>
